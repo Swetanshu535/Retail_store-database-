@@ -1,0 +1,40 @@
+create database retail_store;
+
+use retail_store;
+select * from retail_store;
+
+-- For toys show the total inventory_level
+select category,round(sum(inventory_level)) as total_inventory
+from retail_store
+where Category= "Toys"
+group by category;
+
+-- for groceries give the average of unit sold
+select category,ceil(avg(Units_Sold)) as avg_unit
+from retail_store
+where Category="Groceries"
+group by category;
+
+-- show the weather_condition show the forecast from 50 to 100
+select Weather_condition,Demand_Forecast
+from Retail_store
+where Demand_Forecast between 50 and 100;
+
+-- Show the season Autumn and count the weather condition cloudy
+select Category,count(Weather_Condition)
+from retail_store
+where Weather_condition="Cloudy"
+group by Category;
+
+-- Show the rainy weather condition and rank based on region 
+select Weather_condition,rank() over (Order by Region)
+from retail_store
+where Weather_condition="Rainy";
+
+-- provide row number based on category 
+select row_number() over (Order by Category)
+from retail_store;
+
+-- create 4 bucket based on the season 
+select Seasonality,ntile(4) over (order by Seasonality)
+from Retail_store;
